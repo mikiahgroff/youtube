@@ -1,0 +1,9 @@
+chapters:
+  - time: "00:00"
+    title: Intro
+  - time: "00:20"
+    title: How a video moves through the repo
+  - time: "01:30"
+    title: Fixing mistakes
+  - time: "02:30"
+    title: Wrap up

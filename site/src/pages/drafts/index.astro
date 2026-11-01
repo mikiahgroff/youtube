@@ -1,0 +1,29 @@
+---
+import { githubBlobUrl } from '../../../../tools/lib/urls.ts';
+import Base from '../../layouts/Base.astro';
+import { getChannel, videosWithStatus } from '../../lib/site';
+
+const channel = await getChannel();
+const drafts = await videosWithStatus('scripted', 'draft');
+---
+
+<Base title="Drafts" description="Scripts for upcoming videos, open for review before filming.">
+  <h1>Drafts</h1>
+  <p>
+    These scripts haven't been filmed yet. If you spot a mistake, open a pull request. It's much
+    cheaper to fix now than after filming. Drafts can change completely, and I may not get to your
+    suggestion before I film. <a href={githubBlobUrl(channel, 'CONTRIBUTING.md')}>How to contribute</a>.
+  </p>
+
+  {drafts.length === 0 && <p>No drafts right now.</p>}
+  <ul class="video-list">
+    {
+      drafts.map((draft) => (
+        <li>
+          <a href={githubBlobUrl(channel, `videos/${draft.id}/script.md`)}>{draft.data.title}</a>
+          <span class="meta">{draft.data.status}</span>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

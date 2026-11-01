@@ -1,0 +1,86 @@
+---
+import { getEntry, render } from 'astro:content';
+import { toSeconds } from '../../../../../tools/lib/rules.ts';
+import { githubEditUrl } from '../../../../../tools/lib/urls.ts';
+import Base from '../../../layouts/Base.astro';
+import { getChannel, videosWithStatus } from '../../../lib/site';
+
+export async function getStaticPaths() {
+  const videos = await videosWithStatus('published');
+  return videos.map((video) => ({ params: { slug: video.id }, props: { video } }));
+}
+
+const { video } = Astro.props;
+const { title, youtube_id, publish_date, corrections, sample } = video.data;
+
+const channel = await getChannel();
+const chapters = (await getEntry('chapters', video.id))?.data.chapters ?? [];
+const writeup = await getEntry('writeups', video.id);
+const { Content } = writeup ? await render(writeup) : { Content: undefined };
+const chapterUrl = (time: string) => `https://youtu.be/${youtube_id}?t=${toSeconds(time)}`;
+---
+
+<Base title={title}>
+  <h1>{title}</h1>
+  <time class="meta" datetime={publish_date}>{publish_date}</time>
+
+  {
+    sample ? (
+      <div class="player player-placeholder">The video player appears here for real videos.</div>
+    ) : (
+      <iframe
+        class="player"
+        src={`https://www.youtube-nocookie.com/embed/${youtube_id}`}
+        title={title}
+        loading="lazy"
+        allow="encrypted-media; picture-in-picture"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      />
+    )
+  }
+
+  {
+    corrections.length > 0 && (
+      <section class="corrections">
+        <h2>Corrections</h2>
+        <ul>
+          {corrections.map((correction) => (
+            <li>
+              {correction.timestamp && <time>{correction.timestamp} </time>}
+              {correction.text}
+              {correction.credit && (
+                <>
+                  {' '}
+                  (thanks <a href={`https://github.com/${correction.credit}`}>@{correction.credit}</a>)
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    chapters.length > 0 && (
+      <section>
+        <h2>Chapters</h2>
+        <ul class="chapters">
+          {chapters.map((chapter) => (
+            <li>
+              <time>{chapter.time}</time>
+              {sample ? chapter.title : <a href={chapterUrl(chapter.time)}>{chapter.title}</a>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {Content && <Content />}
+
+  <p>
+    <a href={githubEditUrl(channel, `videos/${video.id}/writeup.md`)}>Edit this page on GitHub</a>
+  </p>
+</Base>

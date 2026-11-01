@@ -1,0 +1,19 @@
+# Sample data. `sample: true` keeps this away from the YouTube API; delete the
+# folder once a real video is published.
+title: "Example Video: How This Repo Runs My Channel"
+slug: example-video
+status: published
+sample: true
+youtube_id: AAAAAAAAAAA
+publish_date: 2026-11-03
+tags:
+  - example
+  - open source
+  - youtube
+corrections:
+  - timestamp: "01:45"
+    text: The footer is built from channel.yaml, not hard-coded as I say in the video.
+    credit: octocat
+  - text: The site is rebuilt on every push to main, not nightly.
+contributors:
+  - octocat

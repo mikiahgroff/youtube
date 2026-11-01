@@ -1,0 +1,54 @@
+name: PR preview comment
+
+# GITHUB_TOKEN is read-only on fork PRs, so Validate can't comment itself. This runs
+# from main with write access. It must never check out or execute PR code: the
+# artifact is untrusted, and is only ever read as text.
+on:
+  workflow_run:
+    workflows: [Validate]
+    types: [completed]
+
+permissions:
+  actions: read
+  pull-requests: write
+
+jobs:
+  comment:
+    if: github.repository == 'mikiahgroff/youtube' && github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - id: download
+        uses: actions/download-artifact@v8
+        continue-on-error: true # PRs that touch no videos upload nothing.
+        with:
+          name: description-preview
+          path: preview
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+      - uses: actions/github-script@v9
+        if: steps.download.outcome == 'success'
+        with:
+          script: |
+            const fs = require('fs');
+            const number = fs.readFileSync('preview/pr-number.txt', 'utf8').trim();
+            if (!/^\d+$/.test(number)) throw new Error('Invalid PR number in artifact');
+
+            const { owner, repo } = context.repo;
+            const issue_number = Number(number);
+            const { data: pull } = await github.rest.pulls.get({ owner, repo, pull_number: issue_number });
+            if (pull.head.sha !== context.payload.workflow_run.head_sha) {
+              core.info('Artifact does not match the head of this PR, skipping.');
+              return;
+            }
+
+            const marker = '<!-- description-preview -->';
+            const preview = fs.readFileSync('preview/preview.md', 'utf8').slice(0, 60000);
+            const body = `${marker}\n${preview}`;
+
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const existing = comments.find((c) => c.user.type === 'Bot' && c.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }

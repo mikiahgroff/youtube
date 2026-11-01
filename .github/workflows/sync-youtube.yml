@@ -1,0 +1,45 @@
+name: Sync YouTube
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write # Commits channel/.sync-state.json back to main.
+
+concurrency:
+  group: youtube-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    # Never runs on forks. YOUTUBE_SYNC is a repository variable: nothing reaches the
+    # real channel until it is set to "on", so placeholders can't be pushed by accident.
+    if: github.repository == 'mikiahgroff/youtube' && vars.YOUTUBE_SYNC == 'on'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run validate
+      - run: npm run sync -- --apply
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+
+      # Also after a partial failure, so a video that did release is still recorded.
+      - name: Commit sync state
+        if: ${{ !cancelled() }}
+        run: |
+          [ -f channel/.sync-state.json ] || exit 0
+          git add channel/.sync-state.json
+          git diff --cached --quiet && exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'chore: update sync state [skip ci]'
+          git pull --rebase origin main
+          git push

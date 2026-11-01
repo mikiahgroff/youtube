@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import { getChannel, path, videosWithStatus } from '../lib/site';
+
+const channel = await getChannel();
+const videos = await videosWithStatus('published');
+---
+
+<Base>
+  <h1>{channel.name}</h1>
+  <p>{channel.description}</p>
+
+  <h2>Videos</h2>
+  {videos.length === 0 && <p>Nothing published yet.</p>}
+  <ul class="video-list">
+    {
+      videos.map((video) => (
+        <li>
+          <a href={path(`/videos/${video.id}/`)}>{video.data.title}</a>
+          <time class="meta" datetime={video.data.publish_date}>{video.data.publish_date}</time>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

@@ -1,0 +1,18 @@
+# Pushed to the real YouTube channel by `npm run sync`.
+name: mikiahgroff
+description: >-
+  Placeholder channel description. Replace this before turning on YouTube sync.
+  Everything on this channel is developed in the open: scripts, descriptions and
+  write-ups live on GitHub, and anyone can suggest a fix.
+keywords:
+  - mikiahgroff
+  - open source
+# The site's URL. Change it here, and only here, when the custom domain goes live.
+site_url: https://mikiahgroff.github.io/youtube
+repo: mikiahgroff/youtube
+contact_email: contact@example.com
+links:
+  - label: YouTube
+    url: https://www.youtube.com/@mikiahgroff
+  - label: GitHub
+    url: https://github.com/mikiahgroff

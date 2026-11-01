@@ -1,0 +1,41 @@
+name: Validate
+
+on:
+  pull_request:
+
+# Fork PRs run untrusted code here, so this stays read-only with no secrets.
+# pr-preview-comment.yml posts the preview this workflow uploads.
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true
+          fetch-depth: 2
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run validate
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run site:build
+
+      - name: Build description preview
+        if: ${{ !cancelled() }}
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          npm run preview -- --changed HEAD^1 --out preview/preview.md
+          if [ -f preview/preview.md ]; then echo "$PR_NUMBER" > preview/pr-number.txt; fi
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: description-preview
+          path: preview/
+          if-no-files-found: ignore

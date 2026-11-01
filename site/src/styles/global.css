@@ -1,0 +1,148 @@
+:root {
+  color-scheme: light dark;
+  --background: light-dark(#fbfbfd, #0f172a);
+  --surface: light-dark(#eef1f6, #1e293b);
+  --text: light-dark(#1e293b, #e2e8f0);
+  --muted: light-dark(#55627a, #94a3b8);
+  --accent: light-dark(#0369a1, #38bdf8);
+  --border: light-dark(#d5dbe5, #334155);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font: 1.0625rem/1.65 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.page {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+a {
+  color: var(--accent);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 1.9rem;
+  margin: 2rem 0 0.5rem;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-name {
+  margin-right: auto;
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-footer {
+  margin-top: 3rem;
+  padding: 1rem 0 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.video-list {
+  padding: 0;
+  list-style: none;
+}
+
+.video-list li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.video-list a {
+  font-weight: 600;
+}
+
+.meta {
+  display: block;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.player {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  margin: 1rem 0;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--surface);
+}
+
+.player-placeholder {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.chapters {
+  padding: 0;
+  list-style: none;
+}
+
+.chapters time {
+  display: inline-block;
+  min-width: 4rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.corrections {
+  margin: 1.5rem 0;
+  padding: 0.25rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+}
+
+table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+code {
+  padding: 0.1em 0.3em;
+  border-radius: 0.25rem;
+  background: var(--surface);
+  font-size: 0.9em;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

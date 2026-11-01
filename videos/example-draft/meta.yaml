@@ -1,0 +1,7 @@
+# Sample data so /drafts/ has something to list. Delete with the other sample.
+title: "Example Draft: Reviewing a Script Before Filming"
+slug: example-draft
+status: scripted
+sample: true
+tags:
+  - example

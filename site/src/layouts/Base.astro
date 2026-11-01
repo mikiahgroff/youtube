@@ -1,0 +1,41 @@
+---
+import { getChannel, path } from '../lib/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const channel = await getChannel();
+const { title, description = channel.description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title ? `${title} | ${channel.name}` : channel.name}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="site-name" href={path('/')}>{channel.name}</a>
+        <a href={path('/drafts/')}>Drafts</a>
+        <a href={`https://github.com/${channel.repo}`}>Source</a>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer class="site-footer">
+        {channel.links.map((link) => <><a href={link.url}>{link.label}</a> · </>)}
+        <a href={`mailto:${channel.contact_email}`}>Contact</a>
+        <br />
+        Writing and media CC BY 4.0, code MIT.
+      </footer>
+    </div>
+  </body>
+</html>
