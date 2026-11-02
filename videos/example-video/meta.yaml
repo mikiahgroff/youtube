@@ -10,10 +10,5 @@ tags:
   - example
   - open source
   - youtube
-corrections:
-  - timestamp: "01:45"
-    text: The footer is built from channel.yaml, not hard-coded as I say in the video.
-    credit: octocat
-  - text: The site is rebuilt on every push to main, not nightly.
 contributors:
   - octocat

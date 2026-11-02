@@ -12,21 +12,12 @@ on its write-up page. GitHub will fork the repo and open a pull request for you.
 | To fix... | Edit... |
 | --- | --- |
 | A typo or error in a description | `videos/<slug>/description.md` |
-| A mistake on the write-up page | `videos/<slug>/writeup.md` |
+| Something said wrong in a published video | `videos/<slug>/writeup.md` |
 | A wrong chapter time or title | `videos/<slug>/chapters.yaml` |
-| Something said wrong in a published video | `corrections` in `videos/<slug>/meta.yaml` |
 | A claim in an unfilmed script | `videos/<slug>/script.md` |
 
-A published video can't be edited, so errors in it are recorded as corrections
-instead of by changing its script. A correction looks like this, and it shows up in
-the YouTube description and on the write-up page:
-
-```yaml
-corrections:
-  - timestamp: "03:12"   # optional
-    text: The limit is 5000 characters, not 500.
-    credit: your-github-username   # optional
-```
+A published video can't be edited, so errors in it are fixed on the write-up page
+instead of in its script.
 
 Descriptions are plain text on YouTube, so Markdown won't render there, and `<` and
 `>` aren't allowed at all.
@@ -49,9 +40,8 @@ can be caught while they're cheap to fix. Some things to know first:
 
 ## Credit
 
-If your fix is merged and it corrects something, your GitHub username goes in
-`contributors` or in the correction's `credit` field, and appears as
-"Corrections by @you" in the video's description. Feel free to add it in your pull
+If your fix is merged, your GitHub username goes in `contributors` and appears as
+"Credits: @you" in the video's description. Feel free to add it in your pull
 request. If you'd rather not be credited, say so and I'll leave it out.
 
 ## Licenses

@@ -15,14 +15,9 @@ export function buildDescription({ meta, body, chapters, channel }: DescriptionI
     sections.push(['Chapters:', ...chapters.map((c) => `${c.time} ${c.title}`)].join('\n'));
   }
 
-  if (meta.corrections.length > 0) {
-    const lines = meta.corrections.map((c) => `- ${c.timestamp ? `${c.timestamp} ` : ''}${c.text}`);
-    sections.push(['Corrections:', ...lines].join('\n'));
-  }
-
-  const credits = [...new Set([...meta.corrections.flatMap((c) => c.credit ?? []), ...meta.contributors])];
+  const credits = [...new Set(meta.contributors)];
   if (credits.length > 0) {
-    sections.push(`Corrections by ${credits.map((user) => `@${user}`).join(', ')}`);
+    sections.push(`Credits: ${credits.map((user) => `@${user}`).join(', ')}`);
   }
 
   sections.push(

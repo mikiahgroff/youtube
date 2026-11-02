@@ -51,7 +51,7 @@ export function checkDescription(text: string, file: string): Problem[] {
   if (length > LIMITS.description) {
     problems.push({
       file,
-      message: `built description is ${length} characters, limit is ${LIMITS.description} (chapters, corrections and footer count too)`,
+      message: `built description is ${length} characters, limit is ${LIMITS.description} (chapters and footer count too)`,
     });
   }
   for (const line of text.split('\n')) {

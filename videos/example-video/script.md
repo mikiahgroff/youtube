@@ -15,7 +15,7 @@ scripted, recorded, published.
 ## Fixing mistakes (01:30)
 
 If something in a video is wrong, I can't change the video. I can change the
-description, so corrections go there, and on the write-up.
+write-up, so fixes go there.
 
 ## Wrap up (02:30)
 

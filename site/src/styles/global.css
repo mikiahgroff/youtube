@@ -115,13 +115,6 @@ h1 {
   font-variant-numeric: tabular-nums;
 }
 
-.corrections {
-  margin: 1.5rem 0;
-  padding: 0.25rem 1rem;
-  border-left: 3px solid var(--accent);
-  background: var(--surface);
-}
-
 table {
   display: block;
   overflow-x: auto;

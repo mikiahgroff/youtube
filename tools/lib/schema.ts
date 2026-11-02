@@ -30,15 +30,6 @@ export const metaSchema = z
       .optional(),
     publish_date: isoDate.optional(),
     tags: z.array(z.string().min(1)).default([]),
-    corrections: z
-      .array(
-        z.strictObject({
-          timestamp: timestamp.optional(),
-          text: z.string().min(1),
-          credit: githubUser.optional(),
-        }),
-      )
-      .default([]),
     contributors: z.array(githubUser).default([]),
     // Placeholder content: never synced to YouTube, and the site shows no player for it.
     sample: z.boolean().optional(),

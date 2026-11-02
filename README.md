@@ -43,8 +43,8 @@ and where the video appears:
 
 `recorded` is optional. It's for a video that's filmed but not ready to release.
 
-The description on YouTube is assembled from `description.md`, chapters, corrections,
-credits and a standard footer. Sync only touches videos with a `youtube_id`, and only
+The description on YouTube is assembled from `description.md`, chapters, credits
+and a standard footer. Sync only touches videos with a `youtube_id`, and only
 their title, description and tags, plus visibility the first time a video is
 released. Category, language and everything else are kept.
 
@@ -76,7 +76,7 @@ public in one call, subscribers are notified, and the site page goes live. If sy
 fails, the video stays private. Fix the cause and re-run the workflow.
 
 If a video doesn't need viewer review, skip PR 1. After release, fixes go in
-`corrections` in `meta.yaml`.
+`writeup.md`.
 
 Sync makes each video public once and never changes its visibility again, so to pull a
 video, set it to private in YouTube Studio and it stays that way. To remove its site

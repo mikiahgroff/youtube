@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 const { video } = Astro.props;
-const { title, youtube_id, publish_date, corrections, sample } = video.data;
+const { title, youtube_id, publish_date, sample } = video.data;
 
 const channel = await getChannel();
 const chapters = (await getEntry('chapters', video.id))?.data.chapters ?? [];
@@ -37,28 +37,6 @@ const chapterUrl = (time: string) => `https://youtu.be/${youtube_id}?t=${toSecon
         referrerpolicy="strict-origin-when-cross-origin"
         allowfullscreen
       />
-    )
-  }
-
-  {
-    corrections.length > 0 && (
-      <section class="corrections">
-        <h2>Corrections</h2>
-        <ul>
-          {corrections.map((correction) => (
-            <li>
-              {correction.timestamp && <time>{correction.timestamp} </time>}
-              {correction.text}
-              {correction.credit && (
-                <>
-                  {' '}
-                  (thanks <a href={`https://github.com/${correction.credit}`}>@{correction.credit}</a>)
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      </section>
     )
   }
 
