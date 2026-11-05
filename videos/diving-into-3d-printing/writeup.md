@@ -31,7 +31,7 @@ Setup was straightforward:
 
 ## First Print
 
-![First benchy print](assets/first-benchy-print.jpg)
+![First benchy print](/videos/diving-into-3d-printing/assets/first-benchy-print.jpg)
 
 First print had to be the classic 3D Benchy. Loading filament took a minute to figure out, but ~20 minutes later — on QIDI's included PLA and their tuned manufacturer G-code — I had a genuinely impressive Benchy.
 
