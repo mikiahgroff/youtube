@@ -7,7 +7,7 @@ YouTube channel. Video descriptions, scripts, write-ups and channel details all 
 here, and anyone can open a pull request to correct them, including scripts I haven't
 filmed yet. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Site: <https://mikiahgroff.github.io/youtube/>
+Site: <https://mikiahgroff.com>
 
 Unannounced ideas and sponsor material live in a separate private repo,
 `youtube-workspace`. Nothing here should be secret.
