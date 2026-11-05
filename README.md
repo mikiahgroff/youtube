@@ -1,5 +1,7 @@
 # youtube
 
+[![YouTube](https://img.shields.io/badge/YouTube-mikiahgroff-FF0000?style=flat&logo=youtube&logoColor=white)](https://www.youtube.com/@mikiahgroff)
+
 The public source of truth for the [mikiahgroff](https://www.youtube.com/@mikiahgroff)
 YouTube channel. Video descriptions, scripts, write-ups and channel details all live
 here, and anyone can open a pull request to correct them, including scripts I haven't
