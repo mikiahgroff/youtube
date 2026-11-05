@@ -1,0 +1,23 @@
+chapters:
+  - time: "00:00"
+    title: Intro
+  - time: "00:23"
+    title: Picking a Printer
+  - time: "01:49"
+    title: Assembly
+  - time: "02:38"
+    title: First Print
+  - time: "03:08"
+    title: QIDI Box Setup
+  - time: "04:17"
+    title: Networking
+  - time: "16:22"
+    title: Home Assistant Integration
+  - time: "20:08"
+    title: Spoolman Integration
+  - time: "25:22"
+    title: Slicing
+  - time: "26:00"
+    title: Poop Chute
+  - time: "26:19"
+    title: Wrap Up
