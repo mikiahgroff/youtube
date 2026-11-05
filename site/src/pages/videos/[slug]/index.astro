@@ -16,8 +16,18 @@ const { title, youtube_id, publish_date, sample } = video.data;
 const channel = await getChannel();
 const chapters = (await getEntry('chapters', video.id))?.data.chapters ?? [];
 const writeup = await getEntry('writeups', video.id);
-const { Content } = writeup ? await render(writeup) : { Content: undefined };
-const chapterUrl = (time: string) => `https://youtu.be/${youtube_id}?t=${toSeconds(time)}`;
+const { Content, headings } = writeup ? await render(writeup) : { Content: undefined, headings: [] };
+
+// Headings get wrapped in a link to their matching chapter's point in the video, client-side
+// (Content is opaque rendered HTML, so matching happens by id after the DOM exists).
+const chapterLinks = sample
+  ? {}
+  : Object.fromEntries(
+      headings.flatMap(({ slug, text }) => {
+        const chapter = chapters.find((c) => c.title.toLowerCase() === text.toLowerCase());
+        return chapter ? [[slug, `https://youtu.be/${youtube_id}?t=${toSeconds(chapter.time)}`]] : [];
+      }),
+    );
 ---
 
 <Base title={title}>
@@ -40,25 +50,27 @@ const chapterUrl = (time: string) => `https://youtu.be/${youtube_id}?t=${toSecon
     )
   }
 
-  {
-    chapters.length > 0 && (
-      <section>
-        <h2>Chapters</h2>
-        <ul class="chapters">
-          {chapters.map((chapter) => (
-            <li>
-              <time>{chapter.time}</time>
-              {sample ? chapter.title : <a href={chapterUrl(chapter.time)}>{chapter.title}</a>}
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
-
-  {Content && <Content />}
+  <div class="writeup">{Content && <Content />}</div>
 
   <p>
     <a href={githubEditUrl(channel, `videos/${video.id}/writeup.md`)}>Edit this page on GitHub</a>
   </p>
 </Base>
+
+{Object.keys(chapterLinks).length > 0 && <script type="application/json" id="chapter-links" set:html={JSON.stringify(chapterLinks)} />}
+
+<script>
+  const chapterLinks: Record<string, string> = JSON.parse(document.getElementById('chapter-links')?.textContent ?? '{}');
+
+  for (const heading of document.querySelectorAll<HTMLHeadingElement>('.writeup :is(h2, h3)[id]')) {
+    const href = chapterLinks[heading.id];
+    if (!href) continue;
+    const anchor = document.createElement('a');
+    anchor.href = href;
+    anchor.target = '_blank';
+    anchor.rel = 'noopener';
+    anchor.className = 'heading-anchor';
+    anchor.append(...heading.childNodes);
+    heading.replaceChildren(anchor);
+  }
+</script>
