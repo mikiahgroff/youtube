@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import { getChannel } from '../lib/site';
+
+const channel = await getChannel();
+---
+
+<Base title="About">
+  <p class="kicker">The channel</p>
+  <h1>About</h1>
+  <p class="lede">{channel.description}</p>
+
+  <h2>Links</h2>
+  <ul class="link-list">
+    {
+      channel.links.map((link) => (
+        <li>
+          <a href={link.url}>{link.label}</a>
+        </li>
+      ))
+    }
+    <li>
+      <a href={`https://github.com/${channel.repo}`}>Source on GitHub</a>
+    </li>
+  </ul>
+
+  <h2>About this site</h2>
+  <p>
+    Everything here — scripts, video descriptions, and write-ups — is developed in the open.
+    Issues and pull requests are welcome on the <a href={`https://github.com/${channel.repo}`}>GitHub repo</a>.
+  </p>
+</Base>

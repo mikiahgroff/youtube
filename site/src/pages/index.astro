@@ -7,8 +7,9 @@ const videos = await videosWithStatus('published');
 ---
 
 <Base>
+  <p class="kicker">YouTube channel</p>
   <h1>{channel.name}</h1>
-  <p>{channel.description}</p>
+  <p class="lede">{channel.description}</p>
 
   <h2>Videos</h2>
   {videos.length === 0 && <p>Nothing published yet.</p>}
@@ -16,8 +17,10 @@ const videos = await videosWithStatus('published');
     {
       videos.map((video) => (
         <li>
-          <a href={path(`/videos/${video.id}/`)}>{video.data.title}</a>
-          <time class="meta" datetime={video.data.publish_date}>{video.data.publish_date}</time>
+          <a class="card" href={path(`/videos/${video.id}/`)}>
+            <span class="title">{video.data.title}</span>
+            <time class="meta" datetime={video.data.publish_date}>{video.data.publish_date}</time>
+          </a>
         </li>
       ))
     }

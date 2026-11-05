@@ -8,8 +8,9 @@ const drafts = await videosWithStatus('scripted', 'draft');
 ---
 
 <Base title="Drafts" description="Scripts for upcoming videos, open for review before filming.">
+  <p class="kicker">Work in progress</p>
   <h1>Drafts</h1>
-  <p>
+  <p class="lede">
     These scripts haven't been filmed yet. If you spot a mistake, open a pull request. It's much
     cheaper to fix now than after filming. Drafts can change completely, and I may not get to your
     suggestion before I film. <a href={githubBlobUrl(channel, 'CONTRIBUTING.md')}>How to contribute</a>.
@@ -20,8 +21,12 @@ const drafts = await videosWithStatus('scripted', 'draft');
     {
       drafts.map((draft) => (
         <li>
-          <a href={githubBlobUrl(channel, `videos/${draft.id}/script.md`)}>{draft.data.title}</a>
-          <span class="meta">{draft.data.status}</span>
+          <a class="card" href={githubBlobUrl(channel, `videos/${draft.id}/script.md`)}>
+            <span class="title">{draft.data.title}</span>
+            <span class={`badge ${draft.data.status === 'draft' ? 'status-draft' : ''}`}>
+              {draft.data.status}
+            </span>
+          </a>
         </li>
       ))
     }

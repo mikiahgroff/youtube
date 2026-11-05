@@ -23,18 +23,20 @@ const { title, description = channel.description } = Astro.props;
   <body>
     <div class="page">
       <header class="site-header">
-        <a class="site-name" href={path('/')}>{channel.name}</a>
-        <a href={path('/drafts/')}>Drafts</a>
-        <a href={`https://github.com/${channel.repo}`}>Source</a>
+        <a class="site-name" href={path('/')}><span class="prompt">~/</span>{channel.name}</a>
+        <nav>
+          <a href={path('/about/')}>About</a>
+          <a href={path('/drafts/')}>Drafts</a>
+          <a href={`https://github.com/${channel.repo}`}>Source</a>
+        </nav>
       </header>
       <main>
         <slot />
       </main>
       <footer class="site-footer">
-        {channel.links.map((link) => <><a href={link.url}>{link.label}</a> · </>)}
-        <a href={`mailto:${channel.contact_email}`}>Contact</a>
-        <br />
-        Writing and media CC BY 4.0, code MIT.
+        {channel.links.map((link) => <a href={link.url}>{link.label}</a>)}
+        <a href={path('/about/')}>About</a>
+        <p class="fine-print">Writing and media CC BY 4.0, code MIT.</p>
       </footer>
     </div>
   </body>
