@@ -174,6 +174,9 @@ Home Assistant doesn't expose every entity to the voice pipeline by default — 
 
 ## Spoolman Integration
 
+> A full video on setting up Spoolman is in progress. I'll link to the draft here once
+> it's up, and swap it for the finished video once that's done.
+
 Goal: never manually pick the active filament in both [Spoolman](https://github.com/Donkie/Spoolman) and the printer.
 
 In `~/printer_data/config/moonraker.conf`:
