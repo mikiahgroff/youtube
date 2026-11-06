@@ -15,7 +15,7 @@ That ruled a few things out:
 - **Voron** — great, but not "works out of the box"
 - **Ender 3 Pro** — too slow
 
-I landed on the [**QIDI Q2**](https://link.amazon/B0acyPa8L): root access, mostly open source, customizable, fast, cloud-optional.
+I landed on the [**QIDI Q2**](https://link.amazon/B09ZHrmE3): root access, mostly open source, customizable, fast, cloud-optional.
 
 > "It's sort of the Linux of 3D printers."
 > — [Thomas Sanladerer](https://www.youtube.com/watch?v=30gz9rgw94w)
