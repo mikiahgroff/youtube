@@ -50,8 +50,7 @@ and a standard footer. Sync only touches videos with a `youtube_id`, and only
 their title, description and tags, plus visibility the first time a video is
 released. Category, language and everything else are kept.
 
-The two videos marked `sample: true` are placeholder data. Sync never sends them to
-YouTube. Delete both folders once a real video exists.
+A video marked `sample: true` is placeholder data. Sync never sends it to YouTube.
 
 To move the site to a custom domain, change `site_url` in `channel/channel.yaml`, the
 only place the build reads it from, and add the domain under **Settings > Pages >
